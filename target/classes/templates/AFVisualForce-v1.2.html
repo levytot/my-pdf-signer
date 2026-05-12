@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8"/>
+    <title>HKT 家居電話申請書</title>
+    <style>
+        body {
+            font-family: "SimSun", "NotoSansSC", sans-serif;
+            font-size: 10pt;
+            color: #000;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0; /* 背景色仅用于网页预览，打印时通常为白色 */
+			line-height: 1.6;  /* 增加行高，改善阅读体验 */
+        }
+		
+		.header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px; /* 标题与上方元素的间距 */
+        }
+		
+		/* --- 新增：右上角固定信息框样式 --- */
+		.header-info {
+			background-color: #fff;
+			box-sizing: border-box;
+			border:none;
+		}
+		
+		.header-info table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-bottom: 5px;
+		}
+		.header-info td {
+			padding: 2px 0;
+			font-size: 10pt;
+		}
+		
+		/* 左上角“機密” */
+        .confidential {
+          font-size: 10pt;
+          font-weight: bold;
+          letter-spacing: 2px;
+        }
+		
+		/* 黑色通栏标题 */
+        .main-title-banner {
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            margin-top: 50px; /* 与上方信息的间距 */
+        }
+        .main-title-banner h1 {
+            margin: 0;
+            font-size: 15pt;
+            font-weight: normal;
+            letter-spacing: 5px;
+        }
+        .main-title-banner h2 {
+            margin: 5px 0 0;
+            font-size: 14pt;
+            font-weight: normal;
+            letter-spacing: 3px;
+        }
+		
+        @page {
+            size: A4;
+            margin: 25mm 10mm 20mm 10mm; /* 减小左右边距，使主体内容更宽 */
+            @top-center {
+                content: element(header);
+            }
+            @bottom-left {
+                content: element(footer);
+            }
+        }
+        .page {
+            background-color: #fff;
+            width: 210mm; /* 限制在网页预览时的宽度为A4宽度 */
+            max-width: 100%;
+            margin: 0 auto;
+            box-sizing: border-box;
+            position: relative;
+            page-break-after: always;
+        }
+        .page:last-child {
+            page-break-after: auto;
+        }
+        @media print {
+            body { background-color: #fff; padding: 0; }
+            .page { margin: 0; box-shadow: none; width: 100%; max-width: none; height: auto; page-break-after: always; }
+            .page:last-child { page-break-after: auto; }
+            .header { max-width: none; margin: 0; } /* 打印时解除宽度限制，由 @page margin 控制 */
+        }
+        
+        /* 定义页脚，使其在每页底部重复显示 */
+        .footer {
+            position: running(footer);
+            text-align: left;
+            padding-left: 10px; /* 适当的左间距 */
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .footer-logo {
+            height: 25px; /* 调整合适的高度 */
+        }
+        
+        /* 定义页眉，使其在每页顶部重复显示 */
+        .header {
+            position: running(header);
+            width: 100%;
+            max-width: 210mm; /* 限制在网页预览时的宽度为A4宽度 */
+            margin: 0 auto;   /* 网页预览时居中对齐 */
+            display: table;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        .header-left {
+            display: table-cell;
+            text-align: left;
+            vertical-align: bottom;
+        }
+        .header-right {
+            display: table-cell;
+            text-align: right;
+            vertical-align: bottom;
+        }
+        .logo-img { height: 40px; }
+        .title { font-weight: bold; font-size: 14px; margin-top: 5px; }
+        .form-id { font-size: 12px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        td, th { border: 1px solid #000; padding: 5px; vertical-align: top; }
+        .section-title { background-color: #e0e0e0; font-weight: bold; padding: 5px; border: 1px solid #000; margin-top: 10px; margin-bottom: 5px; }
+        .bold { font-weight: bold; }
+        .underline { text-decoration: underline; }
+        .center { text-align: center; }
+        .right { text-align: right; }
+        .indent { margin-left: 20px; }
+
+        .content { position: relative; z-index: 1; }
+        .page-footer { position: absolute; bottom: 15mm; left: 15mm; right: 15mm; font-size: 9px; color: #555; border-top: 1px solid #ccc; padding-top: 5px; display: flex; justify-content: space-between; }
+        .page-number { text-align: center; width: 100%; }
+		.placeholder {
+            min-width: 100px;
+            border-bottom: 1px dashed #666;
+            color: #333;
+            text-decoration: underline;
+            padding: 0 60px;
+        }
+        
+        /* 模拟复选框的外框 */
+        .pdf-checkbox {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 1px solid #000; /* 黑色边框 */
+            text-align: center;
+            line-height: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+
+        /* 模拟对勾：通过旋转边框实现 */
+        .pdf-checkbox.checked::after {
+            content: ''; 
+            display: inline-block;
+            width: 4px;
+            height: 8px;
+            border-bottom: 2px solid #000; /* 对勾的短边 */
+            border-right: 2px solid #000;  /* 对勾的长边 */
+            transform: rotate(45deg);      /* 旋转45度形成对勾 */
+            margin-top: -2px;              /* 微调位置 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 定义全局页眉 -->
+    <div class="header">
+        <div class="header-left">
+            <img class="logo-img" src="data:image/png;base64,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" alt="HKT Logo"/>
+        </div>
+        <div class="header-right">
+            <div class="form-id">表格編號:<span th:text="${contract.formId}">[formId]</span></div>
+        </div>
+    </div>
+    <!-- 定义全局页脚 -->
+    <div class="footer">
+        <img class="footer-logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFYAAAArCAYAAADi6n/oAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAMbSURBVGhD7dhNSBRhHMfxHfMlQujQrYOHLnXwELm6okUd62JJBoLkJTO3REXTFl8y1khITMVDUUhRZqBF7x5Sw0JIk1CT1FLbxHTzpVUrW9+WX888jsbazu7I8hzc/l94Dj7PMyN8dpiZXR0oIRGsoAhWUAQrKIIVFMEKimAFRbCCIlhBEaygCFZQBCsoghWUUFi71YKm1h40dn7DtEOZVMkxY0VLWw8a3n7B0LwyCQcmBz+hkZ2jqW8Ki8qsyxy/0NvBjmd7G9oG8PHnLD539y7/vY7R1D2hnNC7BMI6YKkuQWBYMvxja9GyoEyrNNd+DzvCk6EzlKDMuvIpLOC5ORt+7BxBqa8xqcz+k2Ma9VcuYqueHa9Pw56SLozMDaMwwQgdO3Y9IyDhmXJS79r4sEvf8ajYjGAZRp+OyMoejMmHs/naiuuIy7nmNI4azysfQCZ2pzmvySO+8t3yeb1sY8MuTqDWXIgtbF0Kz8SBG/2webjlzL+/j10R8v8pRrHFw2Yv2riwC2OoLsjHZhk1IhsH71jwQ1lyF8HyVGDnR1F1LpefWzKYcKRuGLPKkqcIlucC1v4VV7NMCJBRI/MQ/8SKOb5XW74FG3MbDyzjGBxWH30vbiHEE+zsECrScziqTp+BQ3Xj7l/BXORTsK5ea1SHCmxgUg3yjWexaXXvKWw78xK965T1KVgpKgehxy8hIlF9hB/L5g8iNdgVeCkqH3FF5dguX93snTW6agh2ZbeW6B7Lc4aVogtxsmESS+wLQV2BCf4cugimDu20BMv7C+u3z4zUVzYsKSsOWyeSDhshsbWA2Luon9KGRLC8NQ8vZXYl25sa7DTIV3MKQvLaMaLBiWB57mHZuxeayy4giK3r9FmIeTi+ekWrRbA8T7Cs3wPITUjltwS//aUo7Xf/mkCwPA2wLPuHpzDsZceyfcGJj9Hq5llGsDxtsGBfE7puXl7+1SrsNEJL+zClrKyNYHlaYVmLoyhPyeB7JUMeTjTPKAvO+QDs/x3BCopgBUWwgiJYQRGsoAhWUAQrKIIVFMEKimAFRbBCAv4APc0oXh4OEyQAAAAASUVORK5CYII=" alt="HKT Logo"/>
+    </div>
+    <div class="page">
+        <div class="content">
+            <table style="width: 100%; border: none; margin-bottom: 10px; padding: 0;">
+                <tr>
+                    <td style="border: none; vertical-align: top; width: 50%; padding: 0;">
+                        <div class="confidential" style="float: none; margin-top: 0;">機密</div>
+                    </td>
+                    <td style="vertical-align: top; width: 50%; padding: 0;">
+                        <table class="header-info" style="width: 100%; float: none; margin: 0;">
+                            <tr>
+                                <td style="padding: 2px 0; text-align: left; width: 40%;"><strong>表格編號:</strong></td>
+                                <td style="padding: 2px 0; text-align: left;" th:text="${contract.formId}">[formId]</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px 0; text-align: left;"><strong>客戶姓名:</strong></td>
+                                <td style="padding: 2px 0; text-align: left;" th:text="${customer.fullName}">[customerFullName]</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <div class="main-title-banner">
+                    <h1 class="center">重要資料表格</h1>
+                    <h1 class="center">家居電話服務</h1>
+            </div>
+
+            <div class="section-title">購買前須知</div>
+            <ul style="padding-left: 20px;">
+                <li>您的申請書及服務指南(包括家居電話服務及/或增值服務)列明您所選購之服務(下文簡稱「相關服務」)，您須支付之費用(包括服務月費，以及根據使用量收取之費用及在特定情況下應予支付的行政費，如安裝費及搬遷費)及負責提供該等服務之法律實體。關於您之相關服務的更多資料及本公司的商鋪地址，可瀏覽本公司網站 http://www.hkt.com 或致電個人客戶服務熱線 1000 進行查詢。</li>
+                <li>您的承諾期列於以下第三節。您可於最少 30 天前通知我們要求終止服務。但若您於承諾期內終止合約，您須支付列於以下第六節之提早終止費用(除非有適用的冷靜期)，您亦須向我們賠償任何您獲得的禮品之價值或已購買之指定產品優惠折扣金額。本公司可以隨時更改或終止合約，但若有關更改會對您造成重大負面影響或導致您的服務費用有所增加(除卻國際直撥及漫遊電話費用)，您有權於有關更改生效日前 15 天內通知本公司終止合約，而不會產生任何提早終止費用或其他取消費用。</li>
+                <li>寬頻電話僅適用於指定網上行客戶或有關服務安装地址只能提供寬頻電話服務；它須靠電力運作，即在停電時無法使用(包括緊急求助電話)，因此不適用於任何依靠寬頻電話/電力供應的設備，包括但不限於平安鐘服務及相關服務。如果您的網上行寬頻服務因任何原因終止，您的寬頻電話服務也將同時終止。如果您的寬頻電話服務與網上行寬頻服務共用一台數據機，該兩項服務會共用頻寬。指定寬頻路由器及 Wi-Fi 連接只限寬頻電話使用及相關服務的質素將受多項因素影響，如路由器的規格、相關服務的網絡規格及服務安裝地址的間隔等。</li>
+                <li>第八節(重要資料)，載有您與本公司簽訂之合約中的其他重要條款。</li>
+                <li>上述詳情及本公司的條款及條件均列於申請表格中。閣下如有其他疑問，必要時請先諮詢本公司職員。</li>
+            </ul>
+        </div>
+    </div>
+    <div class="page">
+        <div class="content">
+            <h2 class="center">個人通訊號碼申請書</h2>
+
+            <div class="section-title">第一節: 客戶資料 <span style="float:right; font-size: 9pt;">(*必需提供)</span></div>
+            <table>
+                <tr>
+                    <td style="width: 20%;">客戶姓名*:</td>
+                    <td style="width: 30%;" th:text="${customer.lastName}">[customerLastName]</td>
+                    <td style="width: 10%;">名</td>
+                    <td style="width: 40%;" th:text="${customer.firstName}">[customerFirstName]</td>
+                </tr>
+                <tr>
+                    <td>護照號碼*:</td>
+                    <td colspan="3">
+                        <span class="pdf-checkbox" th:classappend="${customer.isPassportVerified} ? 'checked'"></span> 已核實 <span th:text="${customer.passportNumber}">[passportNumber]</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>聯絡流動電話號碼:</td>
+                    <td colspan="3" th:text="${customer.mobileNumber}">[mobileNumber]</td>
+                </tr>
+                <tr>
+                    <td>電郵地址:</td>
+                    <td colspan="3" th:text="${customer.emailAddress}">[emailAddress]</td>
+                </tr>
+                <tr>
+                    <td>賬單地址:</td>
+                    <td colspan="3" th:text="${customer.billingAddress}">[billingAddress]</td>
+                </tr>
+            </table>
+
+            <div class="section-title">第二節: 服務供應商 (適用於本申請書內所申請的有關服務)</div>
+            <table style="border:none;">
+                <tr>
+                    <td style="font-size: 9pt;">
+                        Hong Kong Telecommunications (HKT) Limited（「香港電訊」）根據您的申請書、電訊服務總則(個人客戶)(詳情請瀏覽 www.hkt.com/Terms+of+Use)（「總則」）、有關之特別條款(如適用)及特別禮品的條款及條件(如適用)提供所有電訊服務(如家居電話及 IDD 服務)(1010 / csl 流動通訊服務除外)。有關個人客戶 IDD 0060 / 0062 服務之特別條款，請瀏覽 http://hkt.com/For+your+home/Home+phone/International+telephone+services?language=zh_HK。
+                        <br/><br/>
+                        HKT CSP Limited 根據 My HKT 之總則及香港電訊之私隱政策聲明(詳情均可瀏覽 My HKT 網頁 http://cs.hkt.com) 提供及作為您的代理人管理 My HKT 客戶服務平台。My HKT 賬戶讓您於 My HKT 網頁 (http://cs.hkt.com) 及 My HKT App (統稱「My HKT」) 以一個登錄賬戶同時管理您於 HKT 集團或 PCCW 集團成員的某些服務 (例如網上行、家居電話 / eye、Now TV 及某些流動通訊服務)，以及讓 HKT CSP Limited 作為您的代理人並根據適用的條款及條件於該平台登記和管理您的 My HKT 賬戶。
+                        <br/><br/>
+                        Club HKT Limited 根據 The Club 的條款及細則 (詳情可瀏覽 https://www.theclub.com.hk/tnc)、香港電訊之私隱政策聲明 (詳情可瀏覽 The Club 網址) 以及其他適用的條款及細則提供和管理 The Club，一個會員獎賞計劃。The Club 的會員將因應其合資格的香港電訊服務項下(並不包括 Now TV 服務或新媒體服務)的合資格消費按比例獲得 Clubpoints，亦會獲得及/或能兌換各項優惠。請瀏覽 The Club 網址 (https://www.theclub.com.hk) 參閱有關資訊。
+                    </td>
+                </tr>
+            </table>
+
+            <div class="section-title">第三節: 主要服務</div>
+            <table>
+                <tr><td style="width: 50%;">承諾期:</td><td colspan="2" th:text="${contract.commitmentPeriod}">[commitmentPeriod]</td></tr>
+                <tr><td>預計生效日:</td><td colspan="2" th:text="${contract.estimatedEffectiveDate}">[estimatedEffectiveDate]</td></tr>
+                <tr><td>預計安裝日期及時間:</td><td colspan="2" th:text="${contract.estimatedInstallationDate}">[estimatedInstallationDate]</td></tr>
+                <tr><td>申請本服務的新家居電話號碼:</td><td colspan="2" th:text="${contract.newHomePhoneNumber}">[newHomePhoneNumber]</td></tr>
+                <tr><td colspan="3">(新安裝及稍後攜帶原有電話號碼轉至本公司)</td></tr>
+                <tr><td>攜帶原有電話號碼轉至本公司的預計安裝日期:</td><td colspan="2" th:text="${contract.portInInstallationDate}">[portInInstallationDate]</td></tr>
+                <tr><td>攜帶原有電話號碼轉至本公司及生效的預計日期及時段:</td><td colspan="2" th:text="${contract.portInEffectiveDate}">[portInEffectiveDate]</td></tr>
+                <tr><td colspan="3" th:text="${contract.socketOption}">[socketOption]</td></tr>
+                <tr><td colspan="3" th:text="${contract.directoryListingOption}">[directoryListingOption]</td></tr>
+                <tr>
+                    <td class="center bold"></td>
+                    <td class="center bold">承諾期內月費:</td>
+                    <td class="center bold">承諾期後月費*:</td>
+                </tr>
+                <tr>
+                    <td class="bold" th:text="${contract.servicePlanName}">[servicePlanName]</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="content">
+            <table>
+                <tr>
+                    <td>家居電話<br/>承諾期: <span th:text="${contract.commitmentPeriod}">[commitmentPeriod]</span> 個月<br/><span style="font-size:8pt;">*上述承諾期後月費僅供參考。對於承諾期後的月費，請致電1000與我們聯絡</span></td>
+                    <td th:text="${contract.monthlyFeeWithinCommitment}">[monthlyFeeWithinCommitment]</td>
+                    <td th:text="${contract.monthlyFeeAfterCommitment}">[monthlyFeeAfterCommitment]</td>
+                </tr>
+            </table>
+
+            <div class="section-title">第四節: 可選禮品, 自選服務及增值服務</div>
+            <table>
+                <tr>
+                    <th style="width: 50%;">尊貴組合</th>
+                    <th style="width: 25%;">承諾期內月費:</th>
+                    <th style="width: 25%;">承諾期後月費*:</th>
+                </tr>
+                <tr th:each="item : ${listData.optionalServices}">
+                    <td th:utext="${item.serviceName}">[ServiceName]</td>
+                    <td th:text="${item.feeWithin}">[FeeWithin]</td>
+                    <td th:text="${item.feeAfter}">[FeeAfter]</td>
+                </tr>
+                <tr>
+                    <td>
+                        - 客戶家居電話號碼 IDD 0060 及 IDD 001 登記讓客戶能分別使用字首為 0060 及 001 之國際撥號撥打 IDD 電話。<br/>
+                        - 國際通話費適用而且通話費可作更改。有關所有通話費詳情請聯絡客戶服務熱線 1000。<br/>
+                        - 通話費以每分鐘為基本計算。<br/>
+                        - 每次撥號所用費不足壹毫將以壹毫計算。<br/>
+                        - IDD 防擅用收費電話功能能讓你防止未經你同意而使用你的電話接打 IDD 及其他收費電話。<br/>
+                        -IDD防擅用收費電話功能 (IDD接入鎖定密碼顯示如上)。<br/>
+                        家居滋擾電話攔截服務 。<br/>
+                        HKT 家居電話之家居滋擾電話攔截服務條款及
+                        細則。<br/>
+                         
+                        1. 當客戶新申請或續約現有的 HKT 家居電話
+                        服務時，客戶可選擇在指定的 HKT 家居電話
+                        上 申請本家居滋擾電話攔截服務（「本服務」）。<br/>
+                         
+                        2. 本服務亦或會適用於由我們（Hong Kong
+                        Telecommunications (HKT) Limited（「HKT
+                        」））不時指定的 HKT 家居電話。<br/>
+                         
+                        3. 客戶使用本服務將被視為客戶已閱讀、理
+                        解並同意本條款及細則，以及我們隨時指定並
+                        通知客戶的其他與本服務相關的條款及細則（
+                        統稱為「本服務條款及細則」）。<br/>
+                         
+                        4. 本服務旨在偵測及自動攔截撥打到客戶的
+                        PCCW/HKT DEV 指定 HKT 家居電話的滋擾來電。<br/>
+                         
+                        5. 滋擾電話號碼列表（「滋擾電話列表」）
+                        會由 HKT、香港移動通訊有限公司（「CSL」
+                        ，為
+                        我們的聯營公司之一）和/或第三方供應商不
+                        時提供和更新，恕不另行通知。<br/>
+                         
+                        6. 客戶使用本服務即表示承認並同意，所有
+                        撥打到客戶的指定 HKT 家居電話的來電號碼
+                        將
+                        均與電話系統中的滋擾電話列表進行匹配，以
+                        檢查每通來電是否可能是滋擾電話。。<br/>
+                         
+                        7. 客戶授權並同意，我們可自行決定是否攔
+                        截被識別為滋擾電話的來電號碼。<br/>
+                         
+                        8. 為提供更好的服務，客戶承認並同意，電
+                        訊盈科（PCCW）或香港電訊（HKT）集團公司
+                        的來電在本服務下將不會被攔截。<br/>
+                         
+                        9. 如果客戶希望在其指定的 HKT 家居電話上
+                        接收滋擾電話列表上的特定電話號碼的來電，
+                        客戶只能通過要求我們關閉指定的 HKT 家居
+                        電話上的本服務來實現。客戶可隨時致電
+                        HKT 客戶服務熱線 1000 提出此類要求或終止
+                        指定的 HKT 家居電話上的本服務。<br/>
+                         
+                        10. 儘管滋擾電話列表不時進行更新，但 HKT
+                        、CSL 和/或第三方供應商並不以任何方式保
+                        證所有滋擾電話都能被識別或攔截，客戶承認
+                        並同意 HKT、CSL 及其相關公司：<br/>
+                         
+                        (a) 不對任何因被攔截或未被攔截的來電所引
+                        起的損失或損害，以及本服務的質量、性質、
+                        準確性和實用性承擔任何責任；<br/>
+                         
+                        (b) 不以任何方式保證：<br/>
+                         
+                        (i) 本服務能滿足客戶要求；<br/>
+                         
+                        (ii) 本服務將連續、不中斷、及時、安全且
+                        無錯誤地提供；<br/>
+                         
+                        (iii) 使用本服務可獲得的結果或信息將準確
+                        可靠；或<br/>
+                         
+                        (iv) 客戶通過本服務獲得的任何服務、信息
+                        或其他資料的質量將符合客戶期望。
+                        PCCW/HKT DEV
+                         
+                        11. 客戶明確了解並同意，使用本服務完全出
+                        於客戶自己的風險，本服務依「現況」和
+                        「現有」的基礎提供，我們及我們的相關公司
+                        明確不提供任何明示或隱含的保證，包括但
+                        不限於銷售性、特定用途的適用性和非侵權性
+                        。我們及我們的相關公司對任何用戶通訊或
+                        個人化設定的及時性、刪除、傳遞錯誤或未能
+                        儲存，以及因下載任何材料、數據或信息而
+                        引起的任何設備損壞或數據丟失，不承擔任何
+                        責任。客戶明確免除我們及我們的相關公司
+                        對客戶因訪問或使用本服務（或其中任何部分
+                        ）而引起的任何及一切責任。<br/>
+                         
+                        12. 我們保留隨時修改或取消本服務（或其中
+                        任何部分）及/或本服務的任何功能的權利，
+                        並無需事先通知。客戶同意我們及我們的相關
+                        公司對於修改或終止本服務和/或其任何功
+                        能，對客戶或任何第三方均不承擔任何責任。<br/>
+                         
+                        13. 我們保留隨時修改本服務條款及細則的權
+                        利，並無需事先通知。所有與本服務相關的
+                        事項和爭議將受到我們的最終決定。<br/>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-title">第五節: 贈品及禮品</div>
+        <div style="border: 1px solid #000; padding: 5px; margin-bottom: 10px;">N/A</div>
+
+        <div class="content">
+            <div class="section-title">第六節: 主要服務 / 自選服務 / 增值服務 / 其他服務的費用 (適用於上述第三及第四節你所選用之服務)</div>
+            <table>
+                <tr>
+                    <td>安裝費:</td>
+                    <td>HK$475 - HK$680 (費用視乎服務安裝地址而定)</td>
+                </tr>
+                <tr>
+                    <td>家居電話服務提早終止費(不足一個月將被視為一整個月計算):</td>
+                    <td>承諾期內月費 (無回贈) x 承諾期餘下月份或 HK$440，以較高者為準，並須繳付已收取之禮品之全數價值/建議零售價或已購買之指定產品優惠折扣金額(如適用)</td>
+                </tr>
+                <tr>
+                    <td>內部轉移裝置費(適用於在服務安裝地址以內轉移裝置):</td>
+                    <td>HK$200 / 插座 / 內部裝置轉移要求</td>
+                </tr>
+                <tr>
+                    <td>搬遷費 (只適用於地址變更):</td>
+                    <td>HK$475 - HK$680 (費用視乎服務安裝地址而定)</td>
+                </tr>
+                <tr>
+                    <td>重新接駁費:</td>
+                    <td>HK$170 (適用於重新恢復已暫停的服務)；<br/>HK$475 (適用於重新接駁已終止的服務 (服務暫停 16 天或以上將被視為已終止服務))</td>
+                </tr>
+                <tr>
+                    <td>申請更改登記人費用</td>
+                    <td>HK$200</td>
+                </tr>
+                <tr>
+                    <td>申請取消費用:</td>
+                    <td>HK$500</td>
+                </tr>
+            </table>
+
+            <div class="section-title">第七節: 賬單選擇</div>
+            <table>
+                <tr>
+                    <td>家居電話服務之賬單選擇:</td>
+                    <td th:text="${contract.billingOption}">[billingOption]</td>
+                </tr>
+                <tr>
+                    <td>電郵地址:</td>
+                    <td th:text="${contract.billingEmail}">[billingEmail]</td>
+                </tr>
+            </table>
+
+            <div class="section-title">第八節: 重要資料</div>
+            <table style="border:none;">
+                <tr>
+                    <td style="font-size: 9pt;">
+                        <span class="bold">個人通訊號碼服務申請：</span>如辦理個人通訊號碼服務申請時，有任何遺漏或錯誤輸入應支付費用，或你所選擇的選項組合並非如本服務指南指明由本公司提供，或存在任何其他差異或錯誤，本公司的客戶服務部將會在切實可行的範圍內盡快與你聯絡，以糾正該等差異或錯誤，本公司糾正所有差異及錯誤後將重新辦理你的申請。
+                        <br/><br/>
+                        <span class="bold">我可否終止服務？：</span>你可於最少 30 天前，郵寄已填妥的終止表格至終止表格上指明的地址通知本公司或以本公司指定的其他方法遞交申請，要求終止個人通訊號碼服務。如果本公司於合約固定期屆滿前不超過 30 天的期間內收到你的終止表格，本公司將向你收取自本公司收到你的終止表格之日起計 30 天的服務費。如果你於合約固定期內終止個人通訊號碼服務，則你須向本公司支付提早終止費。你可聯絡本公司的客戶服務熱線以獲取終止表格。詳情請查閱總則第 13.3 條。
+                        <br/><br/>
+                        <span class="bold">服務的合約固定期結束時會怎樣？：</span>在本服務的合約固定期結束時，如果本公司不能與你聯絡，或你未與本公司聯絡，或者你沒有決定是否將現有的合約續期，本公司將繼續根據現有合約為你提供本服務，在合約固定期後每月按現有合約的指定費用收費（即月費），直到你提前至少 30 天前致電本公司的熱線 1000，取消本服務為止。你可參閱總則第 23.7 及 23.8 條了解詳情。
+                        <br/><br/>
+                        <span class="bold">我能否延長合約固定期？：</span>你可透過議定額外合約固定期，延長本服務的合約固定期。你亦可同意在本服務合約固定期屆滿後，用其他新合約來替換現有合約。
+                        <br/><br/>
+                        <span class="bold">哪些合約條款是可以修改的？：</span>本公司可以透過在本服務指南第三部分所列的網頁發佈修改本服務的所有條款及條件（包括變更費用）。如果本公司認為修改會給你造成重大負面影響，或者會導致本服務的費用增加（IDD 費用除外），本公司會至少提前 30 天通知你。若本公司增加費用（IDD 費用除外）或修改本服務的條款及條件，你有權在修改生效前預先給予 15 天之通知終止你的合約，且毋須負責任何因該終止而產生的費用（附加費用除外）。請參閱總則第 22.4 條了解詳情。
+                        <br/><br/>
+                        <span class="bold">費用：</span>如你已訂購合約固定期計劃，你將支付合約固定期內本服務的合約固定期月費。如果你未承諾合約固定期計劃，或你的合約固定期已屆滿且不予延長或續期，你須按月繳付月費。本公司亦將向你收取本服務指南中列明的其他費用。
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="content">
+    <div class="section-title">第九節: 語彙及其他資料</div>
+            <table style="border:none;">
+                <tr>
+                    <td style="ont-size: 9pt;">
+                        <span class="bold">承諾期：</span>此為您同意訂購家居電話服務及自選服務的承諾期。倘就家居電話服務選擇承諾期，有關承諾期自動適用於根據家居電話申請書內選擇的自選服務，除非該自選服務選擇的承諾期有所不同。承諾期自實際生效日開始。如果您於承諾期及伸延期期間終止家居電話服務或自選服務，則將就您終止的有關服務收取提早終止費。
+    伸延期：此為承諾期將予以延長的一個過渡期，以便讓您從其他營運商轉入(需要提供與其他營運商未完結服務合約月份的證明)。伸延期內將不收取承諾期內月費。<br/>
+                        <span class="bold">總承諾期：</span>此為承諾期及伸延期的總承諾期。如果您於總承諾期及伸延期期間終止家居電話服務或自選服務，則將就您終止的有關服務收取提早終止費。<br/>
+                        <span class="bold">預計安裝日：</span>此為本公司將於服務安裝地址進行家居電話服務安裝的預計日，有關日期可能發生變動。安裝日應是於服務安裝地址安裝家居電話服務的實際日期。<br/>
+                        <span class="bold">預計生效日：</span>此為家居電話服務及自選服務於服務安裝地址生效的預計日，有關日期可能發生變動。生效日應是於服務安裝地址開始提供家居電話服務的實際日期。
+                    </td>
+                </tr>
+            </table>
+
+            <div class="section-title">第十節: 服務計劃、自選及增值服務資料</div>
+            <table>
+                <tr><td>個人通訊號碼服務固定定期服務計劃</td></tr>
+                <tr><td>個人通訊號碼服務固定定期服務計劃</td></tr>
+            </table>
+
+            <div class="section-title">第十一節: 付款及授權</div>
+            <table>
+                <tr><td>支付方式：</td><td th:text="${contract.paymentMethod}">[paymentMethod]</td></tr>
+                <tr><td>賬號：</td><td th:text="${contract.accountNumber}">[accountNumber]</td></tr>
+            </table>
+
+            <div class="section-title">第十二節: 《個人資料(私隱)條例》下的個人資料收集聲明</div>
+            <table style="border:none;">
+                <tr>
+                    <td style="font-size: 9pt;">
+                        請注意，在我們為您提供您申請的服務之前，您必須提供註明*號（如有）的資料。您可以選擇不提供可選資料（即未有註明*號的資料），但是如果我們沒有相關資料，我們可能無法為您提供更佳的及個性化的服務，而您的用戶體驗將會受到影響。
+                        <br/><br/>
+                        您提供的個人資料和其他資料以及我們隨後不時收集、生成及/或編纂關於您的其他資料（統稱「資料」）將會由您申請的相關服務（HKT 固網服務、The Club 及 MyHKT）以及其他相關服務（統稱「本服務」）的有關服務供應商，即 Hong Kong Telecommunications (HKT) Limited、及該等其他相關服務的服務供應商（即本集團實體（即香港電訊有限公司（香港電訊有限公司是一家於開曼群島註冊成立的有限公司）和電訊盈科有限公司以及其各自的附屬公司、聯營公司和關聯公司，包括但不限於香港移動通訊有限公司、電訊盈科媒體有限公司、Moov (Hong Kong) Limited、PCCW OTT (Hong Kong) Limited、益體健有限公司、HKT Education Limited、Club HKT Limited、HKT CSP Limited、HKT Payment Limited、HKT Flexi Limited 及 HKT Advance Limited（視情況而定））之一家或多家成員公司）及市場營銷夥伴根據《個人資料（私隱）條例》（香港法例第 486 章）以及其他適用法律、規則及規例收集、使用及保留。
+                        <br/><br/>
+                        Club HKT Limited（「Club HKT」）將會根據此個人資料收集聲明、Club HKT《私隱聲明》（https://www.theclub.com.hk/zh/privacy-policy.html）（「Club HKT《私隱聲明》」）、《個人資料（私隱）條例》，以及閣下申請的產品和服務的條款及細則，收集、使用及儲存閣下的個人資料。
+                        <br/><br/>
+                        有關資料的收集、編纂、保留、使用、披露和處理的詳情及與本服務有關的任何進一步資料，均在本服務的適用條款及細則、此《個人資料收集聲明》、香港電訊集團的《私隱聲明》（www.hkt.com/legal/privacy.html）及/或電訊盈科集團的《私隱聲明》（www.pccw.com/legal/privacy.html）列明。
+                        <br/><br/>
+                        資料可能會就與提供本服務有關及您在任何時間同意的其他目的而被披露予本集團實體的其他成員公司、其各自的代理（包括債務追收代理）和業務合作夥伴。位於不同司法管轄區的監管機構、政府機構和法院也可能命令我們披露資料，以遵守對我們施加的法律義務和責任。
+                        <br/><br/>
+                        受您有權透過剔選或留空相關空格作出的指示所規限，我們可能會使用您的資料（包括但不限於您的姓名、聯絡資料、服務使用情況、申請詳情、位置數據和其他客戶分析數據）作直接促銷用途，包括向您以郵件、賬單內夾寄 / 簡訊、電郵、數碼短訊
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="content">
+            <table >
+                <tr>
+                    <td style="font-size: 9pt;">
+                        、多媒體短訊、即時通訊、應用程式推送通知、針對性電視訊息、視像裝置廣播訊息、透過電話、針對性及 / 或個人化社交媒體或在網站或其他途徑顯示廣告的方式發出與本服務以及其他產品及發出與本服務以及其他產品及/或服務有關之禮品、折扣、尊享優惠、優惠和推廣的通知及/或最新情報，包括但不限於：電視、電訊、OTT服務、內容服務、流動話音、短訊及數據通訊、IDD/漫遊、互聯網連接、雲端服務、電子/流動付款、娛樂、秘書服務、個人助理服務和資訊服務（例如天氣、財經和新聞資訊）、裝置配件、流動應用程式和軟件、電腦周邊產品、配件和軟件（包括手提電腦、手機、流動裝置及配件、鍵盤、保安裝置及流動應用程式）、獎賞、忠誠或尊貴計劃、生活方式、社交活動、旅遊、銀行、酒樓、運動、音樂、遊戲、交通、家居產品、餐飲、金融、保險、財富管理服務和產品、退休金、投資、經紀服務、理財顧問、信貸及其他理財服務和產品、教育、健康及保健、美容產品和服務、時尚及配飾、電子產品、社交網絡、科技、電子商務、數碼資產及相關產品和服務、物流、零售、家居佈置、媒體及高端消費類產品及服務。
+                        <br/><br/>
+                        <span class="bold">本人反對以下實體按照上文所述使用本人的資料作直接促銷用途：</span>
+                        <br/>
+                        <span class="pdf-checkbox"></span> 本服務之服務供應商
+                        <br/><br/>
+                        經閣下同意，Club HKT 可使用閣下的資料(包括閣下的姓名、聯絡資料、裝置相關資料、產品及服務組合資料、使用、位置數據、交易及繳付賬單相關的模式及行為和人口統計數據及相關衍生數據)，向閣下發送直接促銷通訊及作相關用途。直接促銷通訊可透過多種方式進行(例如以郵件、賬單內夾寄/簡訊、電郵、數碼短訊、多媒體短訊、即時通訊、應用程式推送通知、針對性電視訊息、視像裝置廣播訊息、透過電話、針對性及/或個人化社交媒體或在網站或其他途徑顯示廣告的方式)。經閣下同意，Club HKT 亦可向以下各方提供閣下的資料(包括閣下的姓名、聯絡資料、裝置相關資料、產品及服務組合資料、使用、位置數據、交易及繳付賬單相關的模式及行為和人口統計數據及相關衍生數據)：
+                        <br/>
+                        (a) 我們的集團實體；以及
+                        <br/>
+                        (b) 商戶、廣告、市場營銷和媒體服務供應商、提供下文特定產品及服務類別或就此進行市場營銷的數據分析方案供應商及/或其他第三方，以及獎賞、長期客戶及/或品牌聯乘計劃營運商或服務商(「市場營銷夥伴」)，由它們透過上述特定方式向閣下發送直接促銷通訊及作相關用途。Club HKT 可就跟集團實體及/或市場營銷夥伴提供有關資料收取報酬。
+                        <br/><br/>
+                        <span class="bold">本人反對以下實體按照上文所述使用本人的資料作直接促銷用途：</span>
+                        <br/>
+                        <span class="pdf-checkbox"></span> Club HKT Limited、集團實體及市場營銷夥伴(注意：若您在申請本服務之前尚未登記為The Club的會員或My HKT的用戶，此選項才適用)
+                        <br/><br/>
+                        您有權隨時撤回您就使用您的資料作直接促銷用途的同意（如有給予）。您亦有權查閱、修正或查詢我們所持有有關您的個人資料。如有該要求，請以書面方式致函香港電訊集團的私隱條例事務主任（香港郵政總局信箱 9896 號或 privacy@pccw.com）及/或電訊盈科集團的私隱條例事務主任（香港郵政總局信箱 9872 號或 privacy@pccw.com）。
+                    </td>
+                </tr>
+            </table>
+
+            <div class="section-title">第十三節: 客戶同意書</div>
+            <table>
+                <tr>
+                    <td style="font-size: 9pt;" th:utext="${htmlSnippets.customerConsent}">
+                        <!-- 动态HTML段落拼接 -->
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <p class="bold">客戶簽署</p>
+                <span id="signature-area" class="placeholder"></span> <br/>
+                <span style="padding-top:10px;">申請日期:<span th:text="${contract.applicationDate}">[applicationDate]</span></span>
+            </div>
+            
+            
+            <div class="section-title">銷售員資料</div>
+            <table>
+                <tr><td>訂單創建員:</td><td colspan="3" th:text="${sales.orderCreator}">[orderCreator]</td></tr>
+                <tr><td>銷售渠道:</td><td th:text="${sales.salesChannel}">[salesChannel]</td><td>銷售員編號:</td><td th:text="${sales.salesmanId}">[salesmanId]</td></tr>
+                <tr><td>銷售員姓名:</td> <td colspan="3" th:text="${sales.salesmanName}">[salesmanName]</td></tr>
+                <tr><td>銷售員聯絡電話:</td> <td colspan="3" th:text="${sales.salesmanContact}">[salesmanContact]</td></tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-HK" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HKT 家居電話申請書</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: SimSun, "PingFang SC", "Microsoft YaHei", sans-serif;
+            line-height: 1.5;
+            color: #000;
+            background-color: #fff;
+            padding: 20px;
+            font-size: 12pt;
+        }
+        
+        /* 文档结构 */
+        .document {
+            max-width: 210mm;
+            margin: 0 auto;
+        }
+        
+        /* 页眉 */
+        .header {
+            margin-bottom: 20px;
+        }
+        
+        .confidential {
+            text-align: right;
+            color: #ff0000;
+            font-weight: bold;
+            font-size: 11pt;
+            margin-bottom: 10px;
+        }
+        
+        .form-number {
+            text-align: center;
+            font-size: 10pt;
+            margin-bottom: 10px;
+        }
+        
+        /* 标题 */
+        .title {
+            text-align: center;
+            font-size: 18pt;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        
+        /* 章节样式 */
+        .section {
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-weight: bold;
+            font-size: 13pt;
+            margin: 15px 0 10px 0;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+        }
+        
+        /* 占位符样式 */
+        .placeholder {
+            min-width: 100px;
+            border-bottom: 1px dashed #666;
+            color: #333;
+            text-decoration: underline;
+            padding: 0 2px;
+        }
+        
+        .form-field {
+            margin: 5px 0;
+        }
+        
+        .form-label {
+            display: inline-block;
+            min-width: 150px;
+            font-weight: bold;
+        }
+        
+        .signature-area {
+            margin-top: 50px;
+        }
+        
+        .signature-line {
+            margin: 20px 0;
+        }
+        
+        .signature-label {
+            display: inline-block;
+            width: 150px;
+        }
+        
+        /* 打印样式 */
+        @media print {
+            body {
+                padding: 0;
+            }
+            
+            .page-break {
+                page-break-before: always;
+            }
+        }
+        
+        /* 列表样式 */
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        /* 条款样式 */
+        .terms {
+            font-size: 10pt;
+            line-height: 1.4;
+        }
+        
+        /* 公司信息 */
+        .company-info {
+            text-align: center;
+            font-size: 10pt;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="document">
+        <!-- 机密密文 -->
+        <div class="confidential">機密機密</div>
+        
+        <!-- 表格编号 -->
+        <div class="form-number">表格編號：<span class="placeholder" th:text="${documentNo}">[documentNo]</span></div>
+        
+        <!-- 客户姓名 -->
+        <div class="header">
+            <div class="form-field">
+                <span class="form-label">客戶姓名:</span> 
+                <span class="placeholder" th:text="${customerName}">[customerName]</span>
+            </div>
+        </div>
+        
+        <!-- 标题 -->
+        <div class="title">HKT 家居電話申請書</div>
+        
+        <!-- 第一節：客戶資料 -->
+        <div class="section">
+            <div class="section-title">第一節：客戶資料 (*必需提供)</div>
+            <table>
+                <tr>
+                    <td width="30%">客戶姓名*:</td>
+                    <td><span class="placeholder" th:text="${customerName}">[customerName]</span></td>
+                </tr>
+                <tr>
+                    <td>護照號碼*:</td>
+                    <td><span class="placeholder" th:text="${passportNumber}">[passportNumber]</span></td>
+                </tr>
+                <tr>
+                    <td>聯絡流動電話號碼:</td>
+                    <td><span class="placeholder" th:text="${mobileNumber}">[mobileNumber]</span></td>
+                </tr>
+                <tr>
+                    <td>電郵地址:</td>
+                    <td><span class="placeholder" th:text="${emailAddr}">[emailAddr]</span></td>
+                </tr>
+                <tr>
+                    <td>服務安裝地址*:</td>
+                    <td><span class="placeholder" th:text="${installationAddr}">[installationAddr]</span></td>
+                </tr>
+                <tr>
+                    <td>賬單地址:</td>
+                    <td><span class="placeholder" th:text="${billingAddr}">[billingAddr]</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- 第二節：服務供應商 -->
+        <div class="section">
+            <div class="section-title">第二節：服務供應商 (適用於本申書內所申請的有關服務)</div>
+            <div class="terms">
+                <p>Hong Kong Telecommunications (HKT) Limited (「香港電訊」) 根據您的申請書、電訊服務總則 (個人客戶)(詳情請瀏覽 www.hkt.com/Terms+of+Use)(「總則」)、有關之特別條款 (如適用) 及特別禮品的條款及條件 (如適用) 提供所有電訊服務 (如 家居電話及 IDD 服務)(1O1O/csl 流動通訊服務除外)。</p>
+            </div>
+        </div>
+        
+        <!-- 第三節：主要服務 -->
+        <div class="section">
+            <div class="section-title">第三節：主要服務</div>
+            <table>
+                <tr>
+                    <td width="30%">承諾期:</td>
+                    <td><span class="placeholder" th:text="${commitmentPeriod}">[commitmentPeriod]</span></td>
+                </tr>
+                <tr>
+                    <td>預計生效日:</td>
+                    <td><span class="placeholder" th:text="${effectiveDate}">[effectiveDate]</span></td>
+                </tr>
+                <tr>
+                    <td>申請本服務的家居電話號碼:</td>
+                    <td><span class="placeholder" th:text="${phoneNumber}">[phoneNumber]</span></td>
+                </tr>
+                <tr>
+                    <td>在網上白頁顯示或在電話查詢服務中不提供本人的姓名及電話號碼</td>
+                    <td>□ 同意</td>
+                </tr>
+            </table>
+            <br/>
+            <table>
+                <tr>
+                    <th>服務項目</th>
+                    <th>承諾期內月費</th>
+                    <th>承諾期後月費*</th>
+                </tr>
+                <tr>
+                    <td>家居電話服務 - 24 個月 計劃 家居 電話</td>
+                    <td><span class="placeholder" th:text="${monthly_fee_during}">$28</span></td>
+                    <td><span class="placeholder" th:text="${monthly_fee_after}">$128</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- 第四節：增值服務 -->
+        <div class="section">
+            <div class="section-title">第四節：可選禮品，自選服務及增值服務</div>
+            <div class="terms">
+                <p><strong>尊貴組合</strong></p>
+                <p>簡易撥號 (10)</p>
+                <p>額外簡易撥號 (10)</p>
+                <p>提示電話</p>
+                <p>拒接停示者</p>
+                <p>來電顯示</p>
+                <p>電話會議</p>
+                <p>電話候接來電顯示</p>
+                <p>電話候接</p>
+                <p>請勿干擾</p>
+                <p><strong>遙控轉駁</strong></p>
+                <p>密碼：<span class="placeholder" th:text="${remote_transfer_password}">4046</span></p>
+                <p>音樂暫候</p>
+                <p><strong>IDD 服務</strong></p>
+                <p>啟動 IDD 服務</p>
+                <p><strong>防擅用 IDD 服務</strong></p>
+                <p>密碼：<span class="placeholder" th:text="${idd_password}">4046</span></p>
+            </div>
+        </div>
+        
+        <!-- 第六節：費用 -->
+        <div class="section">
+            <div class="section-title">第六節：主要服務/自選服務/增值服務/其他服務的費用</div>
+            <table>
+                <tr>
+                    <td width="40%">安裝費:</td>
+                    <td>HK$<span class="placeholder" th:text="${installation_fee}">475</span> - HK$<span class="placeholder" th:text="${installation_fee_max}">680</span> (費用視乎服務安裝地址而定)</td>
+                </tr>
+                <tr>
+                    <td>家居電話服務提早終止費:</td>
+                    <td>承諾期內月費 (無回贈) x 承諾期餘下月份</td>
+                </tr>
+                <tr>
+                    <td>內部轉移裝置費:</td>
+                    <td>HK$<span class="placeholder" th:text="${internal_transfer_fee}">200</span>/插座/內部裝置轉移要求</td>
+                </tr>
+                <tr>
+                    <td>搬遷費:</td>
+                    <td>HK$<span class="placeholder" th:text="${relocation_fee}">475</span> - HK$<span class="placeholder" th:text="${relocation_fee_max}">680</span> (費用視乎服務安裝地址而定)</td>
+                </tr>
+                <tr>
+                    <td>重新接駁費:</td>
+                    <td>HK$<span class="placeholder" th:text="${reconnection_fee_1}">170</span> (適用於重新恢復已暫停的服務)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>HK$<span class="placeholder" th:text="${reconnection_fee_2}">475</span> (適用於重新接駁已終止的服務)</td>
+                </tr>
+                <tr>
+                    <td>申請更改登記人費用</td>
+                    <td>HK$<span class="placeholder" th:text="${registration_change_fee}">200</span></td>
+                </tr>
+                <tr>
+                    <td>申請取消費用:</td>
+                    <td>HK$<span class="placeholder" th:text="${cancellation_fee}">500</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- 第七節：賬單選擇 -->
+        <div class="section">
+            <div class="section-title">第七節：賬單選擇</div>
+            <table>
+                <tr>
+                    <td>家居電話服務之賬單選擇:</td>
+                    <td>於 MyHKT 應用程式上查閱</td>
+                </tr>
+                <tr>
+                    <td>電郵賬單地址:</td>
+                    <td><span class="placeholder" th:text="${emailBillingAddr}">[emailBillingAddr]</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- 簽名部分 -->
+        <div id="signature-area" class="section signature-area">
+            <div class="signature-line">
+                <span class="signature-label">客戶簽署:</span>
+                <span class="placeholder" th:text="${customerSignature}"></span>
+            </div>
+            <div class="signature-line">
+                <span class="signature-label">日期:</span>
+                <span class="placeholder" th:text="${signatureDate}">[signatureDate]</span>
+            </div>
+        </div>
+        
+        <!-- 公司信息 -->
+        <div class="company-info">
+            HKT<br/>
+            電訊盈科集團成員<br/>
+            1 of 8<br/>
+            <span th:text="${currentDateTime}">10/03/2026 23:32:22</span>
+        </div>
+    </div>
+</body>
+</html>
