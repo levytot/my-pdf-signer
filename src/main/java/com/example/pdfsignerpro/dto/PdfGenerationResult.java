@@ -1,22 +1,18 @@
 package com.example.pdfsignerpro.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PdfGenerationResult {
 
-    private final byte[] pdfBytes;
-    private final List<SignatureFieldLocation> signatureFieldLocations;
-
-    public PdfGenerationResult(byte[] pdfBytes, List<SignatureFieldLocation> signatureFieldLocations) {
-        this.pdfBytes = pdfBytes;
-        this.signatureFieldLocations = signatureFieldLocations;
-    }
-
-    public byte[] getPdfBytes() {
-        return pdfBytes;
-    }
-
-    public List<SignatureFieldLocation> getSignatureFieldLocations() {
-        return signatureFieldLocations;
-    }
+    private byte[] pdfBytes;
+    private List<SignatureFieldLocation> signatureFieldLocations;
 }

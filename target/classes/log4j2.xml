@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <properties>
+        <property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</property>
+        <property name="LOG_DIR">logs</property>
+    </properties>
+
+    <appenders>
+        <!-- Console Appender -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+        <!-- Rolling File Appender -->
+        <RollingFile name="RollingFile" fileName="${LOG_DIR}/pdfsignerpro.log"
+                     filePattern="${LOG_DIR}/pdfsignerpro-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </appenders>
+
+    <loggers>
+        <!-- Root Logger -->
+        <root level="info">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFile"/>
+        </root>
+
+        <!-- Application Logger -->
+        <logger name="com.example.pdfsignerpro" level="debug" additivity="false">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFile"/>
+        </logger>
+
+        <!-- Spring Framework Logger -->
+        <logger name="org.springframework" level="info" additivity="false">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFile"/>
+        </logger>
+        
+        <!-- OpenHTMLtoPDF Logger -->
+        <logger name="com.openhtmltopdf" level="warn" additivity="false">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFile"/>
+        </logger>
+    </loggers>
+</configuration>

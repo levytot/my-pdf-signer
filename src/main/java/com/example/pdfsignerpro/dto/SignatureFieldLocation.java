@@ -1,69 +1,33 @@
 package com.example.pdfsignerpro.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SignatureFieldLocation {
+    
+    @NotNull(message = "Page number is required")
+    @Min(value = 1, message = "Page number must be at least 1")
     private int page;
+    
+    @NotNull(message = "X coordinate is required")
     private float x;
+    
+    @NotNull(message = "Y coordinate is required")
     private float y;
+    
+    @NotNull(message = "Width is required")
+    @Min(value = 1, message = "Width must be positive")
     private float width;
+    
+    @NotNull(message = "Height is required")
+    @Min(value = 1, message = "Height must be positive")
     private float height;
-
-    public SignatureFieldLocation(int page, float x, float y, float width, float height) {
-        this.page = page;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    }
-
-    // Getters and Setters
-    public int getPage() {
-        return page;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public void setY(float y) {
-        this.y = y;
-    }
-
-    public float getWidth() {
-        return width;
-    }
-
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    public float getHeight() {
-        return height;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
-    }
-
-    @Override
-    public String toString() {
-        return "SignatureFieldLocation{" +
-                "page=" + page +
-                ", x=" + x +
-                ", y=" + y +
-                ", width=" + width +
-                ", height=" + height +
-                '}';
-    }
 }
